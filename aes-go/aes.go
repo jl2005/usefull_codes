@@ -1,10 +1,10 @@
 package aes
 
 import (
-    "errors"
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
+	"errors"
 )
 
 func AesEcbEncrypt(origData, key []byte) ([]byte, error) {
@@ -24,9 +24,9 @@ func AesCbcDecrypt(crypted, key []byte) ([]byte, error) {
 }
 
 func aesEncrypt(origData, key []byte, mode string) ([]byte, error) {
-    if len(origData) == 0 {
-        return make([]byte, 0), nil
-    }
+	if len(origData) == 0 {
+		return make([]byte, 0), nil
+	}
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
@@ -48,9 +48,9 @@ func aesEncrypt(origData, key []byte, mode string) ([]byte, error) {
 }
 
 func aesDecrypt(crypted, key []byte, mode string) ([]byte, error) {
-    if len(crypted) == 0 {
-        return make([]byte, 0), nil
-    }
+	if len(crypted) == 0 {
+		return make([]byte, 0), nil
+	}
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
@@ -61,7 +61,7 @@ func aesDecrypt(crypted, key []byte, mode string) ([]byte, error) {
 		ecb := NewECBDecrypter(block)
 		ecb.CryptBlocks(origData, crypted)
 	case "cbc":
-        blockSize := block.BlockSize()
+		blockSize := block.BlockSize()
 		blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])
 		blockMode.CryptBlocks(origData, crypted)
 	default:
@@ -93,8 +93,8 @@ func PKCS5UnPadding(origData []byte) []byte {
 	length := len(origData)
 	// 去掉最后一个字节 unpadding 次
 	unpadding := int(origData[length-1])
-    if unpadding >= length {
-        return make([]byte, 0)
-    }
+	if unpadding >= length {
+		return make([]byte, 0)
+	}
 	return origData[:(length - unpadding)]
 }
